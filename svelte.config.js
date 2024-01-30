@@ -4,7 +4,7 @@ import adapter from '@sveltejs/adapter-static';
 const config = {
 	kit: {
 		adapter: adapter({
-			fallback: '404.html',
+			fallback: '404.html'
 		}),
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
@@ -12,8 +12,10 @@ const config = {
 		prerender: {
 			handleHttpError: ({ path, referrer, message }) => {
 				// ignore deliberate link to shiny 404 page
-				const prefix = process.env.BASE_PATH ? process.env.BASE_PATH : ''
-				if (path === (prefix + '/sverdle')) {
+				const prefix = process.env.BASE_PATH ? process.env.BASE_PATH : '';
+				console.log('handleHttpError', prefix, path);
+
+				if (path === prefix + '/sverdle') {
 					return;
 				}
 
@@ -21,7 +23,6 @@ const config = {
 				throw new Error(message);
 			}
 		}
-	
 	}
 };
 
